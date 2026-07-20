@@ -11,7 +11,7 @@ const STORAGE_KEY_PINS = "wordly-pinned-words";
 // ---------- Category "lanes" (Requirement #3, extended: themed motion per word) ----------
 // Since the dictionary API doesn't return a semantic category, we detect one
 // ourselves by scanning the word + its definitions for themed keywords.
-// Each lane gets its own seal color and signature animation.
+// Each lane gets its own seal color (light + dark variants) and signature animation.
 
 const LANES = [
   {
@@ -19,6 +19,7 @@ const LANES = [
     label: "Nature",
     glyph: "🌿",
     accent: "#4f7a5e",
+    darkAccent: "#7fb894",
     badgeAnim: "badge-sway",
     keywords: ["plant", "tree", "leaf", "leaves", "flower", "forest", "grow", "garden", "root", "branch", "seed", "botan"],
   },
@@ -27,6 +28,7 @@ const LANES = [
     label: "Creature",
     glyph: "🐾",
     accent: "#8a5a3b",
+    darkAccent: "#c98a5e",
     badgeAnim: "badge-bounce",
     keywords: ["animal", "creature", "bird", "mammal", "insect", "fish", "dog", "cat", "wild", "species", "beast"],
   },
@@ -35,6 +37,7 @@ const LANES = [
     label: "Water",
     glyph: "〰",
     accent: "#3f6a86",
+    darkAccent: "#6fa8c9",
     badgeAnim: "badge-ripple",
     keywords: ["water", "sea", "ocean", "river", "liquid", "wave", "rain", "flow", "lake", "stream"],
   },
@@ -43,6 +46,7 @@ const LANES = [
     label: "Fire",
     glyph: "🔥",
     accent: "#8a3324",
+    darkAccent: "#d9573c",
     badgeAnim: "badge-flicker",
     keywords: ["fire", "flame", "burn", "heat", "hot", "blaze", "ember", "scorch"],
   },
@@ -51,6 +55,7 @@ const LANES = [
     label: "Sky",
     glyph: "☁",
     accent: "#6c85a3",
+    darkAccent: "#9fb8d4",
     badgeAnim: "badge-drift",
     keywords: ["sky", "air", "wind", "cloud", "fly", "breeze", "atmosphere", "flight"],
   },
@@ -59,6 +64,7 @@ const LANES = [
     label: "Night",
     glyph: "✦",
     accent: "#3c3566",
+    darkAccent: "#8b7fc9",
     badgeAnim: "badge-twinkle",
     keywords: ["night", "dark", "shadow", "moon", "star", "midnight", "dusk"],
   },
@@ -67,6 +73,7 @@ const LANES = [
     label: "Feeling",
     glyph: "♥",
     accent: "#9a4a63",
+    darkAccent: "#d97a95",
     badgeAnim: "badge-pulse",
     keywords: ["feeling", "emotion", "love", "joy", "sad", "anger", "fear", "happy", "grief", "desire"],
   },
@@ -75,6 +82,7 @@ const LANES = [
     label: "Mind",
     glyph: "✳",
     accent: "#6b5b8a",
+    darkAccent: "#a89bd4",
     badgeAnim: "badge-float",
     keywords: ["thought", "mind", "idea", "think", "knowledge", "belief", "memory", "reason", "wisdom"],
   },
@@ -83,6 +91,7 @@ const LANES = [
     label: "Trade",
     glyph: "◆",
     accent: "#b08d57",
+    darkAccent: "#e2c07d",
     badgeAnim: "badge-shimmer",
     keywords: ["money", "wealth", "gold", "coin", "rich", "value", "price", "trade", "fortune", "estate"],
   },
@@ -91,6 +100,7 @@ const LANES = [
     label: "Music",
     glyph: "♪",
     accent: "#6a3f66",
+    darkAccent: "#a869a3",
     badgeAnim: "badge-bob",
     keywords: ["music", "sound", "song", "rhythm", "melody", "tune", "instrument"],
   },
@@ -99,6 +109,7 @@ const LANES = [
     label: "Motion",
     glyph: "→",
     accent: "#b0752f",
+    darkAccent: "#d99a4f",
     badgeAnim: "badge-dash",
     keywords: ["move", "movement", "action", "run", "quick", "motion", "force", "rush", "swift"],
   },
@@ -264,7 +275,11 @@ function renderEntry(entry) {
   // have one, otherwise the word's part of speech — never a meaningless count.
   const tabLabel = lane ? lane.label : firstPartOfSpeech || "Entry";
 
-  const cardStyle = lane ? ` style="--lane-accent: ${lane.accent};"` : "";
+  // Pass BOTH a light and dark accent so CSS can pick the right one based on
+  // the current theme (see .word-card / html[data-theme="dark"] .word-card in style.css).
+  const cardStyle = lane
+    ? ` style="--lane-accent-light: ${lane.accent}; --lane-accent-dark: ${lane.darkAccent};"`
+    : "";
 
   const badgeHtml = lane
     ? `<span class="lane-badge ${lane.badgeAnim}" title="Filed under: ${lane.label}" aria-hidden="true">${lane.glyph}</span>`
