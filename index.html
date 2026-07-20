@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wordly — a dictionary, kept</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="wordmark">
+      <span class="wordmark-eyebrow">Est. in the margins</span>
+      <h1>Wordly</h1>
+      <p class="tagline">a dictionary, kept</p>
+    </div>
+
+    <button
+      id="theme-toggle"
+      class="chain-switch"
+      type="button"
+      aria-pressed="false"
+      aria-label="Toggle dark reading room"
+    >
+      <span class="chain-switch-track">
+        <span class="chain-switch-knob"></span>
+      </span>
+      <span class="chain-switch-label">Reading light</span>
+    </button>
+  </header>
+
+  <main>
+    <section class="catalog-drawer" aria-labelledby="search-heading">
+      <h2 id="search-heading" class="visually-hidden">Search the catalog</h2>
+
+      <form id="search-form" class="search-form" autocomplete="off">
+        <label for="word-input" class="drawer-label">File under</label>
+        <div class="search-row">
+          <input
+            type="text"
+            id="word-input"
+            name="word"
+            placeholder="e.g. serendipity"
+            aria-label="Word to look up"
+            required
+          />
+          <button type="submit" class="seal-button" aria-label="Look up word">
+            <span>Look up</span>
+          </button>
+        </div>
+      </form>
+
+      <ul id="saved-words" class="saved-words" aria-label="Pinned words"></ul>
+    </section>
+
+    <section
+      id="results"
+      class="results"
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      <p class="empty-state">
+        Set a word on the drawer above, and its card will be pulled for you.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Definitions courtesy of the Free Dictionary API. Handle with care.</p>
+  </footer>
+
+  <script src="index.js"></script>
+</body>
+</html>
